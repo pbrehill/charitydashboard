@@ -4,11 +4,12 @@ sidebar <- dashboardSidebar(
     "category",
     "Select a charity activity",
     # Hardcoded to DF17
-    sort(unique(df17$`main activity`)),
-    "Social services"
+    c("All activities", sort(unique(df17$`main activity`))),
+    "All activities"
   ),
   sidebarMenu(
-    menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
+    menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+    menuItem("Rankings", tabName = "rankings", icon = icon("list"))
     # menuItem("Data", tabName = "widgets", icon = icon("th"))
   )
 )
@@ -24,14 +25,36 @@ body <- dashboardBody(
         valueBoxOutput("total_revenue"),
         valueBoxOutput("total_giving")
       ),
-      # Plots
+      # Plots1
       fluidRow(
-        box(plotOutput("plot1", height = 250)),
+        # Revenue by source
+        box(plotlyOutput("revenue_graph")),
         box(
           title = "Controls",
           sliderInput("slider", "Number of observations:", 1, 100, 50)
         )
       )
+    )#,
+    # tabItem(
+    #   tabName = "rankings",
+    #   fluidRow(
+    #     tabBox(
+    #       # Title can include an icon
+    #       id = 'tabset1',
+    #       title = "Rankings",
+    #       width = 12,
+    #       tabPanel(
+    #         "Allrevenue",
+    #        verbatimTextOutput("tabset1Selected")
+    #       ),
+    #       tabPanel(
+    #         "Tab2", 
+    #         verbatimTextOutput("tabset1Selected")
+    #       )
+    #     )
+    #   ),
+    #   fluidRow(
+    #     textOutput("tabset1Selected")
+    #   )
     )
   )
-)
