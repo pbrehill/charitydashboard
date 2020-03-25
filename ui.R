@@ -34,27 +34,28 @@ body <- dashboardBody(
           sliderInput("slider", "Number of observations:", 1, 100, 50)
         )
       )
-    )#,
-    # tabItem(
-    #   tabName = "rankings",
-    #   fluidRow(
-    #     tabBox(
-    #       # Title can include an icon
-    #       id = 'tabset1',
-    #       title = "Rankings",
-    #       width = 12,
-    #       tabPanel(
-    #         "Allrevenue",
-    #        verbatimTextOutput("tabset1Selected")
-    #       ),
-    #       tabPanel(
-    #         "Tab2", 
-    #         verbatimTextOutput("tabset1Selected")
-    #       )
-    #     )
-    #   ),
-    #   fluidRow(
-    #     textOutput("tabset1Selected")
-    #   )
+    ),
+    tabItem(
+      tabName = "rankings",
+      fluidRow(
+        tabBox(
+          # Title can include an icon
+          id = 'tabset1',
+          title = "Rankings",
+          selected = "Allrevenue",
+          width = 12,
+          tabPanel(
+            "Allrevenue",
+            verbatimTextOutput("rank.text"),
+            plotlyOutput("all.revenue.ranking")
+          ),
+          tabPanel(
+            "Givingrevenue",
+            verbatimTextOutput("rank.text"),
+            plotlyOutput("all.revenue.ranking")
+          )
+        )
+      )
     )
   )
+)
