@@ -9,17 +9,22 @@ sidebar <- dashboardSidebar(
   ),
   sidebarMenu(
     menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-    menuItem("Rankings", tabName = "rankings", icon = icon("list"))
-    # menuItem("Data", tabName = "widgets", icon = icon("th"))
+    menuItem("Rankings", tabName = "rankings", icon = icon("list")),
+    menuItem("Data", tabName = "data", icon = icon("th"))
   )
 )
 
 
 body <- dashboardBody(
+  # Insert CSS link
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+  ),
   # Topline figures
   tabItems(
     tabItem(
       tabName = "dashboard",
+      h2(textOutput("dashboard_header")),
       fluidRow(
         valueBoxOutput("charity_num"),
         valueBoxOutput("total_revenue"),
@@ -28,7 +33,10 @@ body <- dashboardBody(
       # Plots1
       fluidRow(
         # Revenue by source
-        box(plotlyOutput("revenue_graph")),
+        box(
+          title = "Revenue by source",
+          plotlyOutput("revenue_graph")
+          ),
         box(
           title = "Controls",
           sliderInput("slider", "Number of observations:", 1, 100, 50)
@@ -37,25 +45,39 @@ body <- dashboardBody(
     ),
     tabItem(
       tabName = "rankings",
+      # Add all rankings on left, split on right selected from menu
       fluidRow(
-        tabBox(
-          # Title can include an icon
-          id = 'tabset1',
+        box(
+          title = "Rankings summary",
+          width = 3,
+          actionButton("total_revenue_button", "Total revenue"),
+          actionButton("total_giving_button", "Giving revenue"),
+          actionButton("total_govt_button", "Government grants"),
+          actionButton("total_investment_button", "Investment revenue"),
+          textOutput('test')
+        ),
+        box(
           title = "Rankings",
-          selected = "Allrevenue",
-          width = 12,
-          tabPanel(
-            "Allrevenue",
-            verbatimTextOutput("rank.text"),
-            plotlyOutput("all.revenue.ranking")
-          ),
-          tabPanel(
-            "Givingrevenue",
-            verbatimTextOutput("rank.text"),
-            plotlyOutput("all.revenue.ranking")
+          width = 9,
+          height = 500,
+          textOutput("rank.text"),
+          plotlyOutput("all.revenue.ranking")
+          )
+        )
+      ),
+    tabItem(
+      tabName = "data",
+      # Add all rankings on left, split on right selected from menu
+      fluidRow(
+        box(
+          width = 3,
+          uiOutput('collapse_boxes')
+        ),
+        box(
+          width = 9,
+          dataTableOutput("all_data")
           )
         )
       )
     )
   )
-)

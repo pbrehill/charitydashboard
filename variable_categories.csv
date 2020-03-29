@@ -1,0 +1,170 @@
+Var,Categorisation
+abn,main
+charity name,main
+other organisation names,main
+Registration Status,main
+address line 1,main
+address line 2,main
+town/city,main
+state,main
+postcode,main
+country,main
+charity size,main
+basic religious charity,main
+ais due date,reporting
+date ais received,reporting
+financial report date received,reporting
+conducted activities,main
+why charity did not conduct activities,reporting
+main activity,main
+animal protection,specific activities
+aged care,specific activities
+civic and advocacy activities,specific activities
+culture and arts,specific activities
+economic social and community development,specific activities
+emergency relief,specific activities
+employment and training,specific activities
+environmental activities,specific activities
+grant-making activities,specific activities
+higher education,specific activities
+hospital services and rehabilitation activities,specific activities
+housing activities,specific activities
+income support and maintenance,specific activities
+law and legal services,specific activities
+mental health and crisis intervention,specific activities
+primary and secondary education,specific activities
+religious activities,specific activities
+research,specific activities
+social services,specific activities
+sports,specific activities
+other education,specific activities
+other health service delivery,specific activities
+other recreation,specific activities
+other philanthropic intermediaries and voluntarism promotion,specific activities
+international activities,international activity
+international activities details,international activity
+international activities undertaken - transferring goods or services overseas,international activity
+international activities undertaken - operating overseas including programs,international activity
+other international activities,international activity
+other international activities description,international activity
+other activity,specific activities
+other activities description,specific activities
+how purposes were pursued,purpose
+will purposes change in the next financial year?,purpose
+description of purposes change (if applicable),purpose
+main beneficiaries,beneficiaries
+aboriginal or tsi,beneficiaries
+adults 25 to 65,beneficiaries
+early childhood - under 6,beneficiaries
+adults - 65 and over,beneficiaries
+children 6 to under 15,beneficiaries
+communities overseas,beneficiaries
+families,beneficiaries
+financially disadvantaged people,beneficiaries
+gay lesbian bisexual transgender or intersex persons,beneficiaries
+general community in australia,beneficiaries
+males,beneficiaries
+migrants refugees or asylum seekers,beneficiaries
+pre or post release offenders,beneficiaries
+people with chronic illness,beneficiaries
+people with disabilities,beneficiaries
+people from a culturally and linguistically diverse background (or people from a CALD background),beneficiaries
+people at risk of homelessness,beneficiaries
+people in rural/regional/remote communities,beneficiaries
+unemployed persons,beneficiaries
+veterans or their families,beneficiaries
+victims of crime,beneficiaries
+victims of disasters,beneficiaries
+females,beneficiaries
+youth 15 to U25,beneficiaries
+other charities,beneficiaries
+funded by ndis,beneficiaries
+intend to provide ndis,beneficiaries
+other beneficiaries not listed,beneficiaries
+other beneficiaries description,beneficiaries
+staff - full time,staffing
+staff - part time,staffing
+staff - casual,staffing
+total full time equivalent staff,staffing
+staff - volunteers,staffing
+operates in act,location
+operates in nsw,location
+operates in nt,location
+operates in qld,location
+operates in sa,location
+operates in tas,location
+operates in vic,location
+operates in wa,location
+operates overseas,location
+operating countries,location
+cash or accrual,reporting
+type of financial statement,reporting
+report consolidated with more than one entity,reporting
+charity report has a modification,reporting
+type of report modification,reporting
+charity has related party transactions,reporting
+charity has documented policies for related party transactions,reporting
+fin report from,reporting
+fin report to,reporting
+revenue from government,revenue
+donations and bequests,revenue
+revenue from goods and services,revenue
+revenue from investments,revenue
+all other revenue,revenue
+total revenue,revenue
+other income,revenue
+total gross income,revenue
+employee expenses,expenditure
+interest expenses,expenditure
+grants and donations made for use in Australia,expenditure
+grants and donations made for use outside Australia,expenditure
+all other expenses,expenditure
+total expenses,financials
+net surplus/deficit,financials
+other comprehensive income,financials
+total comprehensive income,financials
+total current assets,financials
+non-current loans receivable,financials
+other non-current assets,financials
+total non-current assets,financials
+total assets,financials
+total current liabilities,financials
+non-current loans payable,financials
+other non-current liabilities,financials
+total non-current liabilities,financials
+total liabilities,financials
+net assets/liabilities,financials
+why did charity have to submit this financial report,reporting
+submitted report - act,reporting
+submitted report - nsw,reporting
+submitted report - nt,reporting
+submitted report - qld,reporting
+submitted report - sa,reporting
+submitted report - tas,reporting
+submitted report - vic,reporting
+submitted report - wa,reporting
+incorporated association,reporting
+association number - act,reporting
+association number - nsw,reporting
+association number - nt,reporting
+association number - qld,reporting
+association number - sa,reporting
+association number - tas,reporting
+association number - vic,reporting
+association number - wa,reporting
+fundraising - act,fundraising
+fundraising number - act,fundraising
+fundraising - nsw,fundraising
+fundraising number - nsw,fundraising
+fundraising - nt,fundraising
+fundraising - qld,fundraising
+fundraising number - qld,fundraising
+fundraising - sa,fundraising
+fundraising number - sa,fundraising
+fundraising - tas,fundraising
+fundraising number - tas,fundraising
+fundraising - vic,fundraising
+fundraising number - vic,fundraising
+fundraising - wa,fundraising
+fundraising number - wa,fundraising
+fundraising - online,fundraising
