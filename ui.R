@@ -4,7 +4,7 @@ sidebar <- dashboardSidebar(
     "category",
     "Select a charity activity",
     # Hardcoded to DF17
-    c("All activities", sort(unique(df17$`main activity`))),
+    c("All activities", sort(unique(df17$main.activity))),
     "All activities"
   ),
   sidebarMenu(

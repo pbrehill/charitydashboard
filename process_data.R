@@ -4,7 +4,7 @@ library(lubridate)
 
 # Define download excel function
 download_sheet <- function(url, sheetno = 1) {
-  ext <- paste0('\\.', gsub("^.*\\.","", url))
+  ext <- paste0('.', gsub("^.*\\.","", url))
   temp = tempfile(fileext = ext)
   download.file(url, destfile=temp, mode='wb')
   output <- readxl::read_excel(temp, sheet = sheetno)
@@ -73,6 +73,7 @@ join_year_dfs <- function (x, y) {
 # 2018
 df18 <- 'https://data.gov.au/data/dataset/cfc1a18e-f4e0-4ed8-9a19-36b59b7a3d5b/resource/9312452f-fced-476e-a6ec-2b2327796a34/download/datadotgov_ais18.xlsx' %>%
   download_sheet()
+print('df18 complete')
 
 
 # 2017
@@ -84,8 +85,11 @@ df17ng <- 'https://data.gov.au/data/dataset/a1f8626c-fefb-4c4d-86ea-deaa04fb1f6e
 df17g <- 'https://data.gov.au/data/dataset/a1f8626c-fefb-4c4d-86ea-deaa04fb1f6e/resource/8a18e71a-58d1-414f-adee-c9066560b05c/download/acnc-2017-group-ais-dataset-approved-reporting-groups.xlsx' %>%
   download_sheet()
 
+
 # Combine
 df17 <- join_year_dfs(df17ng, df17g)
+
+print('df17 complete')
 
 
 # 2016
@@ -100,6 +104,8 @@ df16g <- 'https://data.gov.au/data/dataset/7e073d71-4eef-4f0c-921b-9880fb59b206/
 # Combine
 df16 <- join_year_dfs(df16ng, df16g)
 
+print('df16 complete')
+
 
 # 2015
 ## Non-group
@@ -112,6 +118,8 @@ df15g <- 'https://data.gov.au/data/dataset/86cad799-2601-4f23-b02c-c4c0fc3b6aff/
 
 # Combine
 df15 <- join_year_dfs(df15ng, df15g)
+
+print('df15 complete')
 
 
 # 2014
@@ -126,76 +134,10 @@ df14g <- 'https://data.gov.au/data/dataset/d7992845-5d3b-4868-b012-71f672085412/
 # Combine
 df14 <- join_year_dfs(df14ng, df14g)
 
+print('df14 complete')
+
 
 
 # Turn them into a list
 years <- list(df14 = df14, df15 = df15, df16 = df16, df17 = df17, df18 = df18)
 
-
-# Filter for env
-env_years <- years %>%
-  map(function (x) {
-    x %<>%
-      filter(`main.activity` == 'Environmental activities')
-  }
-)
-
-
-# Get year sums for all numeric vars
-year_sums <- map(years, function (x) {
-  x %>%
-    select_if(is.numeric) %>%
-    colSums(na.rm = TRUE)
-  }
-)
-year_sums <- data.frame(do.call(bind_rows, year_sums))
-
-
-# Get year sums for env
-env_year_sums <- map(env_years, function (x) {
-  x %>%
-    select_if(is.numeric) %>%
-    colSums(na.rm = TRUE)
-}
-)
-env_year_sums <- data.frame(do.call(bind_rows, env_year_sums))
-
-
-# Get average top 25 2016 - 18
-## Total donations for each company
-env_years$df18$abn %<>% as.numeric
-
-three_yr_total <- env_years %>%
-  map(~select(.x, abn, charity.name, donations.and.bequests)) %>%
-  bind_rows(.id = 'year') %>%
-  group_by(abn) %>%
-  summarise(sum_donation = sum(donations.and.bequests, na.rm = TRUE)) %>%
-  arrange(desc(sum_donation)) %>%
-  left_join(env_years$df18[c('abn', 'charity.name')], by = 'abn')
-
-top20 <- head(three_yr_total, 20)
-write_csv(top20, 'top20orgs.csv')
-
-
-# Top perc
-
-top_sum <- env_years$df18 %>%
-  filter(abn %in% top$abn) %>%
-  select(donations.and.bequests) %>%
-  arrange(desc(donations.and.bequests)) %>%
-  sum
-
-perc_represented <- top_sum / sum(env_years$df18$donations.and.bequests, na.rm = TRUE)
-
-# Giving deciles in 2018
-
-env_years$df18 %<>%
-  mutate(giving.decile = as.factor(ntile(donations.and.bequests, 10)))
-
-# Graph it
-env_years$df18 %>%
-  group_by(giving.decile) %>%
-  summarise(don_sum = sum(donations.and.bequests)) %>%
-  mutate(prop.n = prop.table(.$don_sum)) %>%
-  ggplot(aes(fill = giving.decile, y = prop.n, x = 1)) +
-    geom_col(position = 'stack')

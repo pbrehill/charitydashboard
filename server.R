@@ -25,7 +25,7 @@ server <- function(input, output) {
     # Hardcoded df17 - maybe merge all into one DF?
     if (input$category != "All activities") {
       df17 %>%
-        filter(`main activity` == input$category)
+        filter(main.activity == input$category)
     } else {
       df17
     }
@@ -43,7 +43,7 @@ server <- function(input, output) {
   # Total revenue box
   output$total_revenue <- renderValueBox({
     valueBox(
-      round_dollars(sum(filterDF()$`total revenue`)),
+      round_dollars(sum(filterDF()$total.revenue)),
       subtitle = "Total revenue",
       icon = icon('dollar-sign')
     )
@@ -52,7 +52,7 @@ server <- function(input, output) {
   # Total giving revenue
   output$total_giving <- renderValueBox({
     valueBox(
-      round_dollars(sum(filterDF()$`donations and bequests`)),
+      round_dollars(sum(filterDF()$donations.and.bequests)),
       subtitle = "Total giving revenue",
       icon = icon('hand-holding-usd')
     )
@@ -63,16 +63,16 @@ server <- function(input, output) {
     
     # Calculate revenue totals
     df <- filterDF() %>%
-      select(`donations and bequests`, 
-             `revenue from government`, 
-             `revenue from goods and services`,
-             `revenue from investments`,
-             `other income`) %>%
-      rename(giving = `donations and bequests`, 
-             government = `revenue from government`, 
-             `goods and services` = `revenue from goods and services`,
-             investments = `revenue from investments`,
-             other = `other income`) %>%
+      select(donations.and.bequests, 
+             revenue.from.government, 
+             revenue.from.goods.and.services,
+             revenue.from.investments,
+             other.income) %>%
+      rename(giving = donations.and.bequests, 
+             government = revenue.from.government, 
+             `goods and services` = revenue.from.goods.and.services,
+             investments = revenue.from.investments,
+             other = other.income) %>%
       summarise_all(sum) %>%
       t() %>%
       as.data.frame() %>%
@@ -97,26 +97,26 @@ server <- function(input, output) {
   # Ranking tabs
   output$all.revenue.ranking <- renderPlotly({
     df1 <- filterDF() %>%
-      select(`donations and bequests`, 
-             `revenue from government`, 
-             `revenue from goods and services`,
-             `revenue from investments`,
-             `other income`,
-             `total revenue`,
-             `main activity`) %>%
-      group_by(`main activity`) %>%
+      select(donations.and.bequests, 
+             revenue.from.government, 
+             revenue.from.goods.and.services,
+             revenue.from.investments,
+             other.income,
+             total.revenue,
+             main.activity) %>%
+      group_by(main.activity) %>%
       summarise_all(sum) %>%
       as.data.frame() %>%
-      arrange(desc(`total revenue`)) %>%
+      arrange(desc(total.revenue)) %>%
       mutate(
-        selected = `main activity` == input$category,
+        selected = main.activity == input$category,
         selected_colour = ifelse(`selected`, 'purple', 'rgba(204,204,204,1)')
              ) %>%
       drop_na()
       
-      fig <- df1 %>% plot_ly(y = ~reorder(`main activity`, `total revenue`), 
-                          x = ~`total revenue`,
-                          text = ~round_dollars(`total revenue`),
+      fig <- df1 %>% plot_ly(y = ~reorder(main.activity, total.revenue), 
+                          x = ~total.revenue,
+                          text = ~round_dollars(total.revenue),
                           type = 'bar',
                           orientation = 'h',
                           marker = list(color = df1$selected_colour),
@@ -136,7 +136,7 @@ server <- function(input, output) {
   # Text ranking
   
   output$rank.text <- renderText({
-    cat_rank <- rank3[grepl(input$category, rank3$`main activity`), "total.revenue.rank"]
+    cat_rank <- rank3[grepl(input$category, rank3$main.activity), "total.revenue.rank"]
     
     if (length(cat_rank) != 0) {
       paste0(input$category, " ranks ", toOrdinal(cat_rank), " of ", nrow(rank3), " categories\n")
