@@ -9,7 +9,7 @@ round_dollars <- function(x, zero_to_na = FALSE) {
   else paste0("$", x/1000000000, "B")
 }
 
-round_num <- function(x) {
+round_num <- function(x, zero_to_na = TRUE) {
   x <- round((signif(x, 3)))
   
   #Check it is below billions

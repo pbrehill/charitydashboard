@@ -48,8 +48,8 @@ body <- dashboardBody(
           plotlyOutput("revenue_graph")
           ),
         box(
-          title = "Controls",
-          sliderInput("slider", "Number of observations:", 1, 100, 50)
+          title = "Concentration of giving",
+          plotlyOutput("giving_percentiles")
         )
       )
     ),

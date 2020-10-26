@@ -116,6 +116,29 @@ server <- function(input, output) {
     fig
   })
   
+  output$giving_percentiles <- renderPlotly({
+    
+    # Calculate revenue totals
+    df <- filterDF() %>%
+      select(donations.and.bequests) %>%
+      mutate(decile = ntile(donations.and.bequests, 10)) %>%
+      group_by(decile) %>%
+      summarise(total.donations = sum(donations.and.bequests, na.rm = TRUE)) %>%
+      mutate(percentage.donations = total.donations / sum(total.donations))
+    
+    fig <- df %>% plot_ly(labels = ~decile, 
+                          values = ~percentage.donations,
+                          type = 'pie'
+    )
+    fig <- fig %>% layout(showlegend = T,
+                          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                          legend = list(orientation = 'h')
+    )
+    
+    fig
+  })
+  
   # Ranking tabs
   output$all.revenue.ranking <- renderPlotly({
     df1 <- filterDF() %>%
