@@ -1,11 +1,22 @@
 # Significant figures function
-round_dollars <- function(x) {
+round_dollars <- function(x, zero_to_na = FALSE) {
   x <- round((signif(x, 3)))
   
   #Check it is below billions
-  if (nchar(format(x, scientific = FALSE)) < 7) paste0("$", x)
+  if (x == 0 & zero_to_na) "NA"
+  else if (nchar(format(x, scientific = FALSE)) < 7) paste0("$", x)
   else if (nchar(format(x, scientific = FALSE)) < 10) paste0("$", x/1000000, "M")
   else paste0("$", x/1000000000, "B")
+}
+
+round_num <- function(x) {
+  x <- round((signif(x, 3)))
+  
+  #Check it is below billions
+  if (x == 0 & zero_to_na) "NA"
+  else if (nchar(format(x, scientific = FALSE)) < 7) paste0(x)
+  else if (nchar(format(x, scientific = FALSE)) < 10) paste0(x/1000000, "M")
+  else paste0(x/1000000000, "B")
 }
 
 # Capitalise first letter

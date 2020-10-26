@@ -143,7 +143,9 @@ df14 <- df14 %>% rename(revenue.from.government = government.grants)
 df15 <- df15 %>% rename(revenue.from.government = government.grants)
 df16 <- df16 %>% rename(revenue.from.government = government.grants)
 
-
+# TODO: Deal with volunteers and staff variable names
+df17 <- df17 %>% rename(staff.volunteers = `staff.-.volunteers`)
+df18 <- df18 %>% rename(staff.volunteers = `staff.-.volunteers`)
 
 
 # Turn them into a list

@@ -36,7 +36,9 @@ body <- dashboardBody(
       fluidRow(
         valueBoxOutput("charity_num"),
         valueBoxOutput("total_revenue"),
-        valueBoxOutput("total_giving")
+        valueBoxOutput("total_giving"),
+        valueBoxOutput("total_staff"),
+        valueBoxOutput("total_volunteers")
       ),
       # Plots1
       fluidRow(

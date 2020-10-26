@@ -60,6 +60,26 @@ server <- function(input, output) {
     )
   })
   
+  # Total staff FTE
+  output$total_staff <- renderValueBox({
+    valueBox(
+      round_num(sum(filterDF()$total.full.time.equivalent.staff, na.rm = TRUE)) %>%
+        gsub("\\$", "", .),
+      subtitle = "Total staff (in FTE)",
+      icon = icon('users')
+    )
+  })
+  
+  # Total volunteers
+  output$total_volunteers <- renderValueBox({
+    valueBox(
+      round_num(sum(filterDF()$`staff.volunteers` %>% as.numeric(),
+                        na.rm = TRUE)),
+      subtitle = "Total volunteers",
+      icon = icon('hands-helping')
+    )
+  })
+  
   # Revenue sources graph
   output$revenue_graph <- renderPlotly({
     
