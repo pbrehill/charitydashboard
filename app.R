@@ -1,7 +1,11 @@
+# --------------------------------------------------------------
+# Note: for some reason you can't just run the app, use runApp('app.R')
+# --------------------------------------------------------------
+
+
 # install.packages(c("tidyverse", "shiny", "shinydashboard", "toOrdinal",
 #                    "plotly", "shinyBS", "DT"))
 
-# TODO: Figure out why we can't source script but can run in console.
 
 library(tidyverse)
 library(shiny)

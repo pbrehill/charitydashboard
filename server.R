@@ -23,11 +23,13 @@ server <- function(input, output) {
   # Define filter function
   filterDF <- reactive({
     # Hardcoded df17 - maybe merge all into one DF?
-    if (input$category != "All activities") {
-      df17 %>%
-        filter(main.activity == input$category)
+    if (input$category == "All activities") {
+      all_years_data %>%
+        filter(year == input$year_selected)
     } else {
-      df17
+      all_years_data %>%
+        filter(main.activity == input$category,
+               year == input$year_selected)
     }
   })
   
@@ -43,7 +45,7 @@ server <- function(input, output) {
   # Total revenue box
   output$total_revenue <- renderValueBox({
     valueBox(
-      round_dollars(sum(filterDF()$total.revenue)),
+      round_dollars(sum(filterDF()$total.revenue, na.rm = TRUE)),
       subtitle = "Total revenue",
       icon = icon('dollar-sign')
     )
@@ -52,7 +54,7 @@ server <- function(input, output) {
   # Total giving revenue
   output$total_giving <- renderValueBox({
     valueBox(
-      round_dollars(sum(filterDF()$donations.and.bequests)),
+      round_dollars(sum(filterDF()$donations.and.bequests, na.rm = TRUE)),
       subtitle = "Total giving revenue",
       icon = icon('hand-holding-usd')
     )
@@ -67,13 +69,13 @@ server <- function(input, output) {
              revenue.from.government, 
              revenue.from.goods.and.services,
              revenue.from.investments,
-             other.income) %>%
+             all.other.revenue) %>%
       rename(giving = donations.and.bequests, 
              government = revenue.from.government, 
              `goods and services` = revenue.from.goods.and.services,
              investments = revenue.from.investments,
-             other = other.income) %>%
-      summarise_all(sum) %>%
+             other = all.other.revenue) %>%
+      summarise_all(sum, na.rm = TRUE) %>%
       t() %>%
       as.data.frame() %>%
       mutate(category = capFirst(rownames(.)),
@@ -105,7 +107,7 @@ server <- function(input, output) {
              total.revenue,
              main.activity) %>%
       group_by(main.activity) %>%
-      summarise_all(sum) %>%
+      summarise_all(sum, na.rm = TRUE) %>%
       as.data.frame() %>%
       arrange(desc(total.revenue)) %>%
       mutate(

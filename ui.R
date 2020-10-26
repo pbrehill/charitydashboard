@@ -1,8 +1,16 @@
 header <- dashboardHeader(title = "Charities Data Dashboard")
 sidebar <- dashboardSidebar(
   selectInput(
+    # TODO: Finish this input after fixing on the server side
+    "year_selected",
+    "Year",
+    # Hardcoded to DF17
+    c(sort(unique(all_years_data$year), decreasing = TRUE)),
+    "2018"
+  ),
+  selectInput(
     "category",
-    "Select a charity activity",
+    "Charity activity",
     # Hardcoded to DF17
     c("All activities", sort(unique(df17$main.activity))),
     "All activities"

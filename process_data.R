@@ -1,3 +1,4 @@
+library(data.table)
 library(tidyverse)
 library(magrittr)
 library(lubridate)
@@ -137,7 +138,21 @@ df14 <- join_year_dfs(df14ng, df14g)
 print('df14 complete')
 
 
+# Do renaming
+df14 <- df14 %>% rename(revenue.from.government = government.grants)
+df15 <- df15 %>% rename(revenue.from.government = government.grants)
+df16 <- df16 %>% rename(revenue.from.government = government.grants)
+
+
+
 
 # Turn them into a list
-years <- list(df14 = df14, df15 = df15, df16 = df16, df17 = df17, df18 = df18)
+years <- list('2014' = df14,
+              '2015' = df15,
+              '2016' = df16,
+              '2017' = df17,
+              '2018' = df18)
 
+# Bind cols
+all_years_data <- rbindlist(years, idcol = TRUE, fill = TRUE) %>%
+  rename(year = .id)
